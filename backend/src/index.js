@@ -7,6 +7,7 @@ const rateLimit = require('express-rate-limit');
 
 const { pool } = require('./db/connect');
 const apiRouter = require('./routes/api');
+const usersRouter = require('./routes/users');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -39,7 +40,9 @@ app.use(limiter);
 /**
  * Routes
  */
+
 app.use('/api', apiRouter);
+app.use('/api/users', usersRouter);
 
 // Health check route (important for containers / orchestrators)
 app.get('/api/health', async (req, res) => {

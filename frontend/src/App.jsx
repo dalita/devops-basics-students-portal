@@ -1,33 +1,90 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
 function App() {
-    const [message, setMessage] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
 
-    const checkBackend = async () => {
-        setLoading(true);
+    const loadUsers = async () => {
         try {
-            const response = await axios.get('/api/health');
-            setMessage(response.data.message);
+            const response = await axios.get('http://localhost:5001/api/users');
+            setUsers(response.data);
         } catch (error) {
-            setMessage('Failed to connect to backend' + (error.response ? `: ${error.response.data.message}` : ''));
+            console.error(error);
         }
-        setLoading(false);
+    };
+
+    useEffect(() => {
+        loadUsers();
+    }, []);
+
+    const addUser = async () => {
+        if (!name || !email) return;
+
+        await axios.post('http://localhost:5001/api/users', {
+            name,
+            email
+        });
+
+        setName('');
+        setEmail('');
+
+        loadUsers();
+    };
+
+    const deleteUser = async (id) => {
+        await axios.delete(`http://localhost:5001/api/users/${id}`);
+
+        loadUsers();
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold mb-4">Vite + React + Node.js + PostgreSQL</h1>
-            <button
-                onClick={checkBackend}
-                disabled={loading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
-            >
-                {loading ? 'Checking...' : 'Check Backend Connection'}
-            </button>
-            {message && <p className="mt-4 text-lg">{message}</p>}
+        <div style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
+            <h1>DevOps Basics with Dali Students Portal</h1>
+             <p>React • Node.js • PostgreSQL • Kubernetes</p>
+
+            <div style={{ marginBottom: '20px' }}>
+                <input
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={{ marginRight: '10px' }}
+                />
+
+                <input
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{ marginRight: '10px' }}
+                />
+
+                <button onClick={addUser}>
+                    Add User
+                </button>
+            </div>
+
+            <hr />
+
+            {users.map((user) => (
+                <div
+                    key={user.id}
+                    style={{
+                        border: '1px solid #ddd',
+                        padding: '10px',
+                        marginTop: '10px'
+                    }}
+                >
+                    <h3>{user.name}</h3>
+
+                    <p>{user.email}</p>
+
+                    <button onClick={() => deleteUser(user.id)}>
+                        Delete
+                    </button>
+                </div>
+            ))}
         </div>
     );
 }
