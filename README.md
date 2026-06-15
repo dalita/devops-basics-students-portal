@@ -1,116 +1,167 @@
-# Full-Stack React + Node.js + PostgreSQL Template
+# DevOps Basics with Dali - Students Portal
 
-A modern full-stack template using React (with Vite), Node.js (Express), and PostgreSQL, all containerized with Docker.
+A simple full-stack application used in Episode 13 of the Kubernetes for Beginners series.
+
+## Application Architecture
+
+```text
+Browser
+    ↓
+React Frontend
+    ↓
+Node.js + Express API
+    ↓
+PostgreSQL Database
+    ↓
+Persistent Storage
+```
 
 ## Features
 
-- **Frontend**: React 19 with Vite, TailwindCSS
-- **Backend**: Node.js with Express
-- **Database**: PostgreSQL
-- **Containerization**: Docker and Docker Compose
-- **Development Tools**: ESLint, Prettier, Jest, and more
+- Create Users
+- List Users
+- Delete Users
+- REST API
+- PostgreSQL Persistence
+- React Frontend
+- Kubernetes Ready
 
-## Quick Start
+## API Endpoints
 
-### Prerequisites
+### Health Check
 
-- [Node.js](https://nodejs.org/) (v18 or later)
-- [Docker](https://www.docker.com/get-started) and Docker Compose
-- [Git](https://git-scm.com/)
-
-### One-Command Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/template-vite-react-node-postgres.git
-cd template-vite-react-node-postgres
-
-# Run the setup script
-npm run setup
+```http
+GET /api/health
 ```
 
-This will:
-1. Install dependencies for both frontend and backend
-2. Generate .env files with default values
-3. Start the development environment with Docker Compose
+### Get Users
 
-### Manual Setup
+```http
+GET /api/users
+```
 
-If you prefer to set up manually:
+### Create User
 
-1. Install dependencies:
-   ```bash
-   cd frontend && npm install
-   cd ../backend && npm install
-   ```
+```http
+POST /api/users
+```
 
-2. Create .env files:
-   ```bash
-   # In backend directory
-   cp .env.example .env
-   ```
+Example:
 
-3. Start the development environment:
-   ```bash
-   docker-compose up
-   ```
+```json
+{
+  "name": "Harry Potter",
+  "email": "harry@hogwarts.com"
+}
+```
 
-## Development
+### Delete User
+
+```http
+DELETE /api/users/:id
+```
+
+## Database
+
+Example table used in the application:
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255)
+);
+```
+
+## Technology Stack
 
 ### Frontend
 
-```bash
-cd frontend
-npm run dev
+- React
+- Vite
+- Axios
+
+### Backend
+
+- Node.js
+- Express
+- PostgreSQL Driver (pg)
+
+### Database
+
+- PostgreSQL
+
+### Infrastructure
+
+- Docker
+- Kubernetes
+- Minikube
+
+## Project Structure
+
+```text
+frontend/
+├── React Application
+
+backend/
+├── Express API
+├── PostgreSQL Integration
+└── REST Endpoints
+
+k8s/
+├── ConfigMap
+├── Secret
+├── Deployment
+├── Service
+├── Persistent Volume Claim
+└── Ingress
 ```
 
-The frontend will be available at http://localhost:3000.
+## Kubernetes Concepts Demonstrated
+
+This project is used to demonstrate:
+
+- Deployments
+- Services
+- ConfigMaps
+- Secrets
+- Persistent Volumes
+- Persistent Volume Claims
+- Ingress
+- Application Networking
+- Real-World Kubernetes Architecture
+
+## Local Development
 
 ### Backend
 
 ```bash
 cd backend
+npm install
 npm run dev
 ```
 
-The backend API will be available at http://localhost:5000.
-
-### Database
-
-PostgreSQL is available at localhost:5432 with the credentials specified in your .env file.
-
-## API Documentation
-
-### Health Check
-
-```
-GET /api/health
-```
-
-Returns the status of the backend and database connection.
-
-## Testing
+### Frontend
 
 ```bash
-# Run frontend tests
-cd frontend && npm test
-
-# Run backend tests
-cd backend && npm test
+cd frontend
+npm install
+npm run dev
 ```
 
-## Deployment
+### PostgreSQL
 
-This template includes GitHub Actions workflows for CI/CD. See the `.github/workflows` directory for details.
+```bash
+docker run --name postgres-test \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=postgres \
+-e POSTGRES_DB=postgres \
+-p 5432:5432 \
+-d postgres:16-alpine
+```
 
-## Contributing
+## YouTube Series
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+DevOps Basics with Dali
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+Episode 13 - Real World Application on Kubernetes
