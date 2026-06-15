@@ -1,75 +1,82 @@
-# DevOps Basics with Dali - Students Portal
+# DevOps Basics with Dali - Students Portal Frontend
 
-Simple full-stack application used in the Kubernetes EP13 episode.
-
-## Architecture
-
-Frontend (React)
-↓
-Backend (Node.js + Express)
-↓
-PostgreSQL
+React frontend for the Students Portal application used in Episode 13 of the Kubernetes for Beginners series.
 
 ## Features
 
-- Create Users
-- List Users
-- Delete Users
-- PostgreSQL Persistence
-- REST API
-- React Frontend
-
-## API Endpoints
-
-### Get Users
-
-GET /api/users
-
-### Create User
-
-POST /api/users
-
-Example:
-
-```json
-{
-  "name": "Harry Potter",
-  "email": "harry@hogwarts.com"
-}
-```
-
-### Delete User
-
-DELETE /api/users/:id
-
-## Database
-
-Example table:
-
-```sql
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    email VARCHAR(255)
-);
-```
+- Display registered students
+- Create new students
+- Delete existing students
+- Connect to a Node.js REST API
+- Demonstrate frontend-to-backend communication
 
 ## Technology Stack
 
 - React
 - Vite
-- Node.js
-- Express
-- PostgreSQL
+- Axios
+
+## Application Flow
+
+```text
+Browser
+    ↓
+React Frontend
+    ↓
+Node.js API
+    ↓
+PostgreSQL Database
+```
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+## API Requirements
+
+The frontend expects a backend API running on:
+
+```text
+http://localhost:5001
+```
+
+Available endpoints:
+
+```http
+GET    /api/users
+POST   /api/users
+DELETE /api/users/:id
+```
 
 ## Purpose
 
-This application is used in the DevOps Basics with Dali Kubernetes series to demonstrate:
+This frontend is used to demonstrate:
 
-- Deployments
-- Services
-- ConfigMaps
-- Secrets
-- Persistent Volumes
-- Ingress
-- Real-world Kubernetes architecture
+- React Components
+- API Integration
+- CRUD Operations
+- Kubernetes Deployments
+- Services and Networking
+- Ingress Routing
+
+## YouTube Series
+
+DevOps Basics with Dali
+
+Episode 13 - Real World Application on Kubernetes
