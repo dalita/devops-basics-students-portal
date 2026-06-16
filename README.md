@@ -1,51 +1,170 @@
-# DevOps Basics Students Portal
+DevOps Basics Students Portal
 
-Real-world Kubernetes application used in EP13 of DevOps Basics with Dali.
+A real-world Kubernetes application built during EP13 - Real World Application on Kubernetes from the DevOps Basics with Dali series.
 
-## Architecture
+This project demonstrates how to deploy a complete full-stack application on Kubernetes using industry-standard building blocks.
+
+Architecture
 
 Frontend
-- React
+
+* React
+* Nginx
 
 Backend
-- Node.js + Express
+
+* Node.js
+* Express
 
 Database
-- PostgreSQL
+
+* PostgreSQL
 
 Kubernetes Resources
-- Deployments
-- Services
-- ConfigMaps
-- Secrets
-- Persistent Volumes
-- Ingress
 
-## Deploy
+* Deployments
+* Services
+* ConfigMaps
+* Secrets
+* Persistent Volume Claims (PVC)
+* Ingress
 
-### PostgreSQL
+⸻
+
+Application Flow
+
+Browser
+   │
+   ▼
+Ingress
+   │
+   ▼
+Frontend Service
+   │
+   ▼
+Frontend Pod (React)
+   │
+   ▼
+Backend Service
+   │
+   ▼
+Backend Pod (Node.js)
+   │
+   ▼
+PostgreSQL Service
+   │
+   ▼
+PostgreSQL Pod
+   │
+   ▼
+Persistent Volume Claim
+
+⸻
+
+Project Structure
+
+.
+├── backend/
+├── frontend/
+└── k8s/
+    ├── backend/
+    ├── frontend/
+    ├── postgres/
+    ├── configmap/
+    ├── secret/
+    └── ingress/
+
+⸻
+
+Deploy PostgreSQL
 
 kubectl apply -f k8s/secret/postgres-secret.yaml
-kubectl apply -f k8s/postgres/
+kubectl apply -f k8s/postgres/pvc.yaml
+kubectl apply -f k8s/postgres/postgres-deployment.yaml
+kubectl apply -f k8s/postgres/postgres-service.yaml
 
-### Backend
+⸻
 
-kubectl apply -f k8s/configmap/
+Deploy Backend
+
+kubectl apply -f k8s/configmap/backend-configmap.yaml
 kubectl apply -f k8s/secret/backend-secret.yaml
-kubectl apply -f k8s/backend/
+kubectl apply -f k8s/backend/backend-deployment.yaml
+kubectl apply -f k8s/backend/backend-service.yaml
 
-### Frontend
+⸻
 
-kubectl apply -f k8s/frontend/
+Deploy Frontend
 
-### Ingress
+kubectl apply -f k8s/frontend/frontend-deployment.yaml
+kubectl apply -f k8s/frontend/frontend-service.yaml
 
-kubectl apply -f k8s/ingress/
+⸻
 
-## Episode
+Deploy Ingress
 
-EP13 - Real World Application on Kubernetes
+kubectl apply -f k8s/ingress/ingress.yaml
 
-## License
+⸻
+
+Verify Resources
+
+kubectl get pods
+kubectl get svc
+kubectl get ingress
+kubectl get pvc
+
+⸻
+
+Database Access
+
+kubectl exec -it deployment/postgres -- psql -U postgres
+
+Create the users table:
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255)
+);
+
+⸻
+
+Episode Reference
+
+This project was built step-by-step in:
+
+EP13 — Real World Application on Kubernetes
+
+Topics covered:
+
+* Deployments
+* Services
+* ConfigMaps
+* Secrets
+* Persistent Storage
+* Ingress
+* Troubleshooting
+* Helm Introduction
+
+⸻
+
+Next Episode
+
+EP14 — Kubernetes Best Practices
+
+We’ll cover:
+
+* Resource Limits
+* Health Checks
+* Security
+* Labels
+* Liveness Probes
+* Readiness Probes
+* Startup Probes
+
+⸻
+
+License
 
 MIT
