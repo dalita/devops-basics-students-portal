@@ -9,7 +9,7 @@ function App() {
 
     const loadUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:5001/api/users');
+            const response = await axios.get('/api/users');
             setUsers(response.data);
         } catch (error) {
             console.error(error);
@@ -23,7 +23,7 @@ function App() {
     const addUser = async () => {
         if (!name || !email) return;
 
-        await axios.post('http://localhost:5001/api/users', {
+        await axios.post('/api/users', {
             name,
             email
         });
@@ -35,7 +35,7 @@ function App() {
     };
 
     const deleteUser = async (id) => {
-        await axios.delete(`http://localhost:5001/api/users/${id}`);
+        await axios.delete(`/api/users/${id}`);
 
         loadUsers();
     };
