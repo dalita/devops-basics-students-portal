@@ -59,20 +59,6 @@ PostgreSQL Pod
    ▼
 Persistent Volume Claim
 
-⸻
-
-Project Structure
-
-.
-├── backend/
-├── frontend/
-└── k8s/
-    ├── backend/
-    ├── frontend/
-    ├── postgres/
-    ├── configmap/
-    ├── secret/
-    └── ingress/
 
 ⸻
 
