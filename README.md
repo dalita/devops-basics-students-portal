@@ -1,4 +1,5 @@
 DevOps Basics Students Portal
+⭐ If you came from the YouTube channel "DevOps Basics with Dali", leave a star on the repository.
 
 A real-world Kubernetes application built during EP13 - Real World Application on Kubernetes from the DevOps Basics with Dali series.
 
